@@ -31,7 +31,12 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Run SonarQube
-      run: mvn clean verify sonar:sonar -Dsonar.projectKey=feature-gw_039_test -Dsonar.projectName='feature/gw_039_test' -Dsonar.host.url=http://133.186.241.167:9000 -Dsonar.token=sqp_07b65fc989d7db936afbf7dd082c9621b9ac202d
+      run: mvn sonar:sonar -Dsonar.projectKey=github-action -Dsonar.host.url=${{secrets.SONAR_HOST}} -Dsonar.login=${{secrets.SONAR_TOKEN}}
+
+    - name: Update dependency graph
+      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+      env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
 
 
